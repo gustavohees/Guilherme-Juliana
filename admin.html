@@ -1,0 +1,103 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel dos Noivos</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f7fc;
+      padding: 2rem;
+      color: #333;
+    }
+    h1 {
+      text-align: center;
+      color: #3b5c9f;
+    }
+    .mensagem {
+      background: #fff;
+      margin-bottom: 1rem;
+      padding: 1rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+    .mensagem h3 {
+      margin-top: 0;
+    }
+    .file-link {
+      display: block;
+      margin: 0.25rem 0;
+    }
+    #senhaPrompt {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 80vh;
+    }
+    input[type="password"] {
+      padding: 0.5rem;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+    button {
+      margin-top: 1rem;
+      background: #3b5c9f;
+      color: #fff;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div id="senhaPrompt">
+    <h2>🔒 Painel dos Noivos</h2>
+    <p>Digite a senha para acessar:</p>
+    <input type="password" id="senha" placeholder="Senha" />
+    <button onclick="verificarSenha()">Acessar</button>
+  </div>
+
+  <div id="painel" style="display:none;">
+    <h1>📬 Mensagens Recebidas</h1>
+    <div id="mensagensContainer"></div>
+  </div>
+
+  <script type="module">
+    import { db } from './firebase.js';
+    import { collection, getDocs, query, orderBy } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    window.verificarSenha = function () {
+      const senha = document.getElementById('senha').value;
+      if (senha === 'noivos2025') {
+        document.getElementById('senhaPrompt').style.display = 'none';
+        document.getElementById('painel').style.display = 'block';
+        carregarMensagens();
+      } else {
+        alert('Senha incorreta');
+      }
+    };
+
+    async function carregarMensagens() {
+      const container = document.getElementById('mensagensContainer');
+      const q = query(collection(db, 'mensagens'), orderBy('timestamp', 'desc'));
+      const snapshot = await getDocs(q);
+
+      snapshot.forEach(doc => {
+        const data = doc.data();
+        const div = document.createElement('div');
+        div.className = 'mensagem';
+        div.innerHTML = `
+          <h3>${data.nome}</h3>
+          <p>${data.mensagem}</p>
+          ${data.arquivos ? data.arquivos.map(a => `<a href="${a.url}" class="file-link" target="_blank">📎 ${a.name}</a>`).join('') : ''}
+        `;
+        container.appendChild(div);
+      });
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Juliana & Guilherme - 06.07.25</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <div class="logo">
+      <img src="logo.png" alt="J | G 06.07.25" />
+    </div>
+
+    <h1>Deixe sua mensagem com amor</h1>
+    <p class="intro">Estamos reunindo palavras e lembranças que ficarão eternizadas em nossos corações.</p>
+
+    <p class="verso">
+      "Por essa razão, o homem deixará pai e mãe e se unirá à sua mulher, e os dois se tornarão uma só carne.
+      Assim, eles já não são dois, mas sim uma só carne. Portanto, o que Deus uniu, ninguém o separe." – <strong>Mateus 19:5-6</strong>
+    </p>
+
+    <form id="messageForm">
+      <input type="text" id="nome" placeholder="Seu nome" required />
+      <textarea id="mensagem" placeholder="Sua mensagem" required></textarea>
+      <input type="file" id="fileInput" multiple accept="image/*,video/*" />
+      <button type="submit">Enviar para os noivos</button>
+    </form>
+
+    <div id="status" class="status"></div>
+
+    <div class="share-button">
+      <a href="https://api.whatsapp.com/send?text=Deixe%20sua%20mensagem%20para%20os%20noivos%20Guilherme%20e%20Juliana%20aqui:%20https://SEULINKAQUI.vercel.app" target="_blank">
+        📲 Compartilhar no WhatsApp
+      </a>
+    </div>
+
+    <div style="margin-top: 1rem;">
+      <a href="admin.html" style="color: #3b5c9f; text-decoration: underline; font-weight: 500;">🔑 Acessar Painel dos Noivos</a>
+    </div>
+  </div>
+
+  <script type="module" src="firebase.js"></script>
+  <script type="module" src="script.js"></script>
+</body>
+</html>
